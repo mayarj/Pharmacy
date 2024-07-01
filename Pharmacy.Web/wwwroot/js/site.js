@@ -2,3 +2,8 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+function getPhoneNumber(number) {
+    let val = Math.floor(number);
+    return "0" + val.toString();
+}
+

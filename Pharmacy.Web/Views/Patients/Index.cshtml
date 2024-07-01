@@ -32,11 +32,15 @@
                         <tr>
                             <td>@(item.FirstName + " " + item.LastName)</td>
                             <td>@Html.DisplayFor(modelItem => item.Address)</td>
-                            <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                            @{
+                                var processedPhoneNumber = (int)(item.PhoneNumber);
+                                var res = "0" + processedPhoneNumber.ToString();
+                                <td>@res</td>
+                            }
                             <td class="text-end">
                                 <a class="btn btn-info btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                                 <a class="btn btn-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                                
+
                             </td>
                         </tr>
                     }

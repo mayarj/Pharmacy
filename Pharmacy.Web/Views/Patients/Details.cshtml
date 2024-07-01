@@ -18,7 +18,11 @@
                         <dt class="col-sm-3">Address:</dt>
                         <dd class="col-sm-9">@Html.DisplayFor(model => model.Address)</dd>
                         <dt class="col-sm-3">Phone:</dt>
-                        <dd class="col-sm-9">@Html.DisplayFor(model => model.PhoneNumber)</dd>
+                        @{
+                            var processedPhoneNumber = (int)(@Model.PhoneNumber);
+                            var res = "0" + processedPhoneNumber.ToString();
+                            <td>@res</td>
+                        }
                     </dl>
                     <hr />
                     <h1>Prescriptions</h1>
@@ -49,3 +53,19 @@
         </div>
     </div>
 </div>
+<script>
+    (function() {
+        function getPhoneNumber(decimalNumber) {
+            return "0" + decimalNumber.toString();
+        }
+
+        var phoneNumberDecimal = parseFloat('@Model.PhoneNumber');
+        var processedPhoneNumber = getPhoneNumber(phoneNumberDecimal);
+
+        document.addEventListener('readystatechange', function() {
+            if (document.readyState === 'interactive') {
+                document.getElementById('PhoneNumber').innerHTML = processedPhoneNumber;
+            }
+        });
+    })();
+</script>
