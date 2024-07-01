@@ -1,0 +1,41 @@
+﻿@model Pharmacy.Web.VWModels.Medicines.EditIngredientInMedicineVWModel
+
+@{
+    ViewData["Title"] = "Edit Ingredient";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit Ingredient</h1>
+
+<form asp-action="EditIngredient" method="post">
+    <div class="col-md-6">
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.IngredientName):
+            </dt>
+            <dd class="col-sm-2">
+                @Html.DisplayFor(model => model.IngredientName)
+            </dd>
+        </dl>
+        <div class="form-group">
+            <label asp-for="Ratio">Ratio:</label>
+            <input asp-for="Ratio" class="form-control" />
+            <span asp-validation-for="Ratio" class="text-danger"></span>
+            <input type="hidden" value="@Model.IngredientId" asp-for="IngredientId" />
+        </div>
+        <input type="hidden" value="@Model.MedicineId" asp-for="MedicineId" />
+        <input type="hidden" value="@Model.Id" asp-for="Id" />
+        <div class="form-group mt-4">
+            <button type="submit" class="btn btn-primary">Edit Ingredient</button>
+            <a asp-action="EditIngredients" asp-route-id="@Model.MedicineId" class="btn btn-secondary ms-2">Back</a>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

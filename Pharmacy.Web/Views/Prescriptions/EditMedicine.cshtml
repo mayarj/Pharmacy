@@ -1,0 +1,42 @@
+﻿@model Pharmacy.Web.VWModels.Prescriptions.EditMedicineInPrescriptionVWModel
+
+@{
+    ViewData["Title"] = "Edit Medicine";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit Medicine</h1>
+
+<form asp-action="EditMedicine" method="post">
+    <div class="col-md-6">
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                Medicine:
+            </dt>
+            <dd class="col-sm-2">
+                @ViewBag.Medicine.Name
+            </dd>
+        </dl>
+        <div class="form-group">
+            <label asp-for="Count">Count:</label>
+            <input asp-for="Count" class="form-control" />
+            <span asp-validation-for="Count" class="text-danger"></span>
+
+        </div>
+        <input type="hidden" value="@Model.MedicineId" asp-for="MedicineId" />
+        <input type="hidden" value="@Model.PrescriptionId" asp-for="PrescriptionId" />
+            <input type="hidden" value="@Model.Id" asp-for="Id" />
+        <div class="form-group mt-4">
+            <button type="submit" class="btn btn-primary">Edit Medicine</button>
+            <a asp-action="Edit" asp-route-id="@Model.PrescriptionId" class="btn btn-secondary ms-2">Back</a>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}
