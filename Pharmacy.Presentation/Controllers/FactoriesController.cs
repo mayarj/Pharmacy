@@ -28,17 +28,17 @@ namespace Pharmacy.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateFactoryVWModel category)
+        public async Task<IActionResult> Create(CreateFactoryVWModel factory)
         {
             if (ModelState.IsValid)
             {
                 await _factoryService.CreateFactory(new EntitieFactory()
                 {
-                    Name = category.Name,
+                    Name = factory.Name,
                 });
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(factory);
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -48,15 +48,15 @@ namespace Pharmacy.Web.Controllers
                 return NotFound();
             }
 
-            var category = await _factoryService.GetFactoryById((int)id);
-            if (category is null)
+            var factory = await _factoryService.GetFactoryById((int)id);
+            if (factory is null)
             {
                 return NotFound();
             }
             var filteredMedicines = await _factoryService.GetAllMedicendelongToFactory((int)id);
 
             ViewBag.Medicines = filteredMedicines;
-            return View(category);
+            return View(factory);
         }
 
         [HttpPost]
@@ -83,31 +83,35 @@ namespace Pharmacy.Web.Controllers
                 return NotFound();
             }
 
-            var category = await _factoryService.GetFactoryById((int)id);
-
-            var categoryModel = new EditFactoryVWModel()
+            var factory = await _factoryService.GetFactoryById((int)id);
+            if (factory is null)
             {
-                Name = category.Name,
-                Id = category.Id,
+                return NotFound();
+            }
+
+            var factoryModel = new EditFactoryVWModel()
+            {
+                Name = factory.Name,
+                Id = factory.Id,
             };
 
-            return View(categoryModel);
+            return View(factoryModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(EditFactoryVWModel category)
+        public async Task<IActionResult> Edit(EditFactoryVWModel factory)
         {
             if (ModelState.IsValid)
             {
                 await _factoryService.UpdateFactory(new EntitieFactory()
                 {
-                    Id = category.Id,
-                    Name = category.Name,
+                    Id = factory.Id,
+                    Name = factory.Name,
                 });
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(factory);
         }
     }
 }

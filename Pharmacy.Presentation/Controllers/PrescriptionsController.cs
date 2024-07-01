@@ -39,13 +39,13 @@ namespace WebTest.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _prescriptionService.CreatePrescription(new EntitiePrescription()
+                var newPrescription  = await _prescriptionService.CreatePrescription(new EntitiePrescription()
                 {
                     Name = prescription.Name,
                     Note = prescription.Note,
                     PatientId = prescription.PatientId,
                 });
-                return RedirectToAction("Details", "Patients", new { id = prescription.PatientId });
+                return RedirectToAction("Details", "Prescriptions", new { id = newPrescription.Id });
             }
             return View(prescription);
         }
@@ -103,7 +103,7 @@ namespace WebTest.Controllers
                     Name = prescription.Name,
                     PatientId = prescription.PatientId,
                 });
-                return RedirectToAction("Details", "Patients", new { id = prescription.PatientId });
+                return RedirectToAction("Details", "Prescriptions", new { id = prescription.PatientId });
             }
             var medicines = await _medicineService.GetAllMedicines();
             var medicinesSelect = medicines.Select(i => new SelectListItem

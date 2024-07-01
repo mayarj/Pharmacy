@@ -89,7 +89,10 @@ namespace Pharmacy.Web.Controllers
             }
 
             var category = await _categoryService.GetCategoryById((int)id);
-           
+            if(category is null)
+            {
+                return NotFound();
+            }
             var categoryModel = new EditCategoryVWModel()
             {
                 Name = category.Name,

@@ -308,6 +308,10 @@ namespace Pharmacy.Web.Controllers
         public async Task<IActionResult> EditIngredient(int ingredientId, int medicineId)
         {
             var medicineIngredientDTO = await _medicineService.GetMedicineIngredientDTO(medicineId, ingredientId);
+            if(medicineIngredientDTO is null)
+            {
+                return NotFound();
+            }
             var ingredient = new EditIngredientInMedicineVWModel()
             {
                 Id = medicineIngredientDTO.Id,

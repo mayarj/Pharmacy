@@ -83,7 +83,10 @@ namespace Pharmacy.Web.Controllers
             }
 
             var ingredient = await _ingredientService.GetIngredientById((int)id);
-
+            if(ingredient is null)
+            {
+                return NotFound();
+            }
             var ingredientModel = new EditIngredientVWModel()
             {
                 Name = ingredient.Name,
