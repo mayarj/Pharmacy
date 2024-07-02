@@ -20,7 +20,6 @@ namespace Pharmacy.Web.Controllers
             _logger = logger;
         }
 
-        [Authorize(Policy = "UserAndAdmin")]
         public async Task<IActionResult> Index()
         {
             var categories = await _categoryService.GetAllCatagories();
@@ -48,7 +47,6 @@ namespace Pharmacy.Web.Controllers
             return View(category);
         }
 
-        [Authorize(Policy = "UserAndAdmin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null)

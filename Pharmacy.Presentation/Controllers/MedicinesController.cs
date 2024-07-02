@@ -24,7 +24,6 @@ namespace Pharmacy.Web.Controllers
             _ingredientService = ingredientService;
         }
 
-        [Authorize(Policy = "UserAndAdmin")]
         public async Task<IActionResult> Index()
         {
             var medicines = await _medicineService.GetAllMedicines();
@@ -228,7 +227,6 @@ namespace Pharmacy.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
-        [Authorize(Policy = "UserAndAdmin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null)
