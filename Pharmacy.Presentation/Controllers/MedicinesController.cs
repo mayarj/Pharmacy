@@ -4,6 +4,7 @@ using Pharmacy.Domain.Entities;
 using Pharmacy.Web.VWModels.Medicines;
 using Pharmacy.Web.VWModels.MedicineIngredient;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Pharmacy.Web.Controllers
 {
@@ -27,6 +28,7 @@ namespace Pharmacy.Web.Controllers
             var medicines = await _medicineService.GetAllMedicines();
             return View(medicines);
         }
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Create()
         {
             var categories = await _categoryService.GetAllCatagories();
@@ -55,7 +57,7 @@ namespace Pharmacy.Web.Controllers
             ViewBag.FactoryId = new SelectList(factoriesSelect, "Value", "Text");
             return View();
         }
-
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateMedicineVWModel medicine)
@@ -103,7 +105,7 @@ namespace Pharmacy.Web.Controllers
             ViewBag.FactoryId = new SelectList(factoriesSelect, "Value", "Text");
             return View(medicine);
         }
-
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id is null)
@@ -154,7 +156,7 @@ namespace Pharmacy.Web.Controllers
             };
             return View(medicineModel);
         }
-
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditMedicineVWModel medicine)
@@ -206,7 +208,7 @@ namespace Pharmacy.Web.Controllers
             ViewBag.FactoryId = new SelectList(factoriesSelect, "Value", "Text");
             return View(medicine);
         }
-
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
@@ -224,6 +226,7 @@ namespace Pharmacy.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
+        [Authorize(Policy = "UserAndAdmin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null)
@@ -244,6 +247,7 @@ namespace Pharmacy.Web.Controllers
 
             return View(medicine);
         }
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> EditIngredients(int? id)
         {
             if (id is null)
@@ -269,6 +273,7 @@ namespace Pharmacy.Web.Controllers
             ViewBag.MedicineId = (int)id;
             return View();
         }
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddIngredient([FromRoute] int id, AddIngredientToMedicineVWModel ingredientToMedicine)
@@ -288,7 +293,7 @@ namespace Pharmacy.Web.Controllers
             return RedirectToAction(nameof(EditIngredients), new { id = id });
 
         }
-
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteIngredient(int ingredientId, int medicineId)
@@ -304,7 +309,7 @@ namespace Pharmacy.Web.Controllers
             return RedirectToAction(nameof(EditIngredients), new { id = medicineId });
 
         }
-
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> EditIngredient(int ingredientId, int medicineId)
         {
             var medicineIngredientDTO = await _medicineService.GetMedicineIngredientDTO(medicineId, ingredientId);
@@ -322,6 +327,7 @@ namespace Pharmacy.Web.Controllers
             };
             return View(ingredient);
         }
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditIngredient(EditIngredientInMedicineVWModel model)

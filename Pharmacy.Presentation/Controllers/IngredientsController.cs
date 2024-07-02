@@ -14,18 +14,20 @@ namespace Pharmacy.Web.Controllers
         {
             _ingredientService = ingredientService;
         }
-
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Index()
         {
             var ingredients = await _ingredientService.GetAllIngredients();
             return View(ingredients);
         }
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
-        }
 
+        }
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateIngredientVWModel ingredient)
@@ -41,7 +43,7 @@ namespace Pharmacy.Web.Controllers
             }
             return View(ingredient);
         }
-
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null)
@@ -57,7 +59,7 @@ namespace Pharmacy.Web.Controllers
 
             return View(ingredient);
         }
-
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
@@ -75,6 +77,7 @@ namespace Pharmacy.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id is null)
@@ -96,7 +99,7 @@ namespace Pharmacy.Web.Controllers
 
             return View(ingredientModel);
         }
-
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditIngredientVWModel ingredient)

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Pharmacy.Web.Controllers
 {
+    
     public class CategoriesController : Controller
     {
         private readonly ILogger<CategoriesController> _logger;
@@ -18,18 +19,18 @@ namespace Pharmacy.Web.Controllers
             _categoryService = categoryService;
             _logger = logger;
         }
-
         public async Task<IActionResult> Index()
         {
             var categories = await _categoryService.GetAllCatagories();
             return View(categories);
         }
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
-
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateCategoryVWModel category)
@@ -44,7 +45,7 @@ namespace Pharmacy.Web.Controllers
             }
             return View(category);
         }
-
+        
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null)
@@ -62,7 +63,7 @@ namespace Pharmacy.Web.Controllers
             ViewBag.Medicines = filteredMedicines;
             return View(category);
         }
-
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
@@ -81,6 +82,7 @@ namespace Pharmacy.Web.Controllers
             }
            
         }
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id is null)
@@ -101,7 +103,7 @@ namespace Pharmacy.Web.Controllers
 
             return View(categoryModel);
         }
-
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit( EditCategoryVWModel category)
