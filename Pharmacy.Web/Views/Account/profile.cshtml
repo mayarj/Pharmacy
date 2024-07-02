@@ -62,19 +62,3 @@
         </div>
     </div>
 </div>
-<script>
-    (function() {
-        function getPhoneNumber(decimalNumber) {
-            return "0" + decimalNumber.toString();
-        }
-
-        var phoneNumberDecimal = parseFloat('@Model.Patient.PhoneNumber');
-        var processedPhoneNumber = getPhoneNumber(phoneNumberDecimal);
-
-        document.addEventListener('readystatechange', function() {
-            if (document.readyState === 'interactive') {
-                document.getElementById('PhoneNumber').innerHTML = processedPhoneNumber;
-            }
-        });
-    })();
-</script>
