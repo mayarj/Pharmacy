@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Pharmacy.Domain.Entities;
 using Pharmacy.Domain.IRepositories;
 using Pharmacy.Infrastructure.Models;
@@ -29,6 +30,7 @@ namespace Pharmacy.Infrastructure.Repositories
                 Id = userDto.Email,
                 UserName = userDto.UserName,
                 Email = userDto.Email,
+                PatientId = userDto.PatientId,
             };
             user.CreatedAt = DateTime.Now;
             user.UpdatedAt = DateTime.Now;
@@ -45,6 +47,7 @@ namespace Pharmacy.Infrastructure.Repositories
                 Email = user.Email,
                 UserName = user.UserName,
                 Id = user.Id,
+                PatientId = userDto.PatientId,
                 Admin = false,
             };
         }
@@ -65,6 +68,7 @@ namespace Pharmacy.Infrastructure.Repositories
                 UserName = user.UserName,
                 Id = user.Id,
                 Admin = false,
+                PatientId = user.PatientId,
             };
         }
 
@@ -82,6 +86,20 @@ namespace Pharmacy.Infrastructure.Repositories
                 UserName = user.UserName,
                 Id = user.Id,
                 Admin = false,
+            };
+        }
+        public async Task<UserDTO> GetLoggedInUser(HttpContext httpContext)
+        {
+            var user = await _userManager.GetUserAsync(principal: httpContext.User);
+            return new UserDTO
+            {
+                Admin = false,
+                Id = user.Id,
+                Email = user.Email,
+                PatientId  = user.PatientId,
+                UserName = user.UserName,
+                CreatedAt = user.CreatedAt,
+                UpdatedAt = user.UpdatedAt,
             };
         }
     }

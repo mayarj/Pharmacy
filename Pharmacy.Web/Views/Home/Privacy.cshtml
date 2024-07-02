@@ -1,6 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
+        if (this.User.IsInRole("Admin") || !this.User.Identity.IsAuthenticated)
+    {
         Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    }
 
 }
 <h1>@ViewData["Title"]</h1>

@@ -12,8 +12,10 @@ namespace WebTest.Controllers
         private readonly IMedicineService _medicineService;
         private readonly IPrescriptionMedicineService _prescriptionMedicineService;
         private readonly IPatientService _patientService;
-        public PrescriptionsController(IPrescriptionService prescriptionService, IPatientService patientService, IPrescriptionMedicineService prescriptionMedicineService, IMedicineService medicineService)
+        private readonly IUserService _userService;
+        public PrescriptionsController(IPrescriptionService prescriptionService, IPatientService patientService, IPrescriptionMedicineService prescriptionMedicineService, IMedicineService medicineService, IUserService userService)
         {
+            _userService = userService;
             _patientService = patientService;
             _medicineService = medicineService;
             _prescriptionMedicineService = prescriptionMedicineService;
@@ -22,6 +24,18 @@ namespace WebTest.Controllers
         public async Task<IActionResult> Index()
         {
             var prescriptions = await _prescriptionService.GetAllPrescription();
+            return View(prescriptions);
+        }
+        public async Task<IActionResult> MyPrescriptions()
+        {
+            var user = await _userService.GetLoggedInUser(HttpContext);
+            Console.WriteLine(user.Id);
+            Console.WriteLine(user.PatientId);
+            if (user.PatientId is null)
+            {
+                return NotFound();
+            }
+            var prescriptions = await _patientService.GetPrescriptions((int)user.PatientId);
             return View(prescriptions);
         }
         public async Task<IActionResult> Create(int id)
@@ -39,7 +53,7 @@ namespace WebTest.Controllers
         {
             if (ModelState.IsValid)
             {
-                var newPrescription  = await _prescriptionService.CreatePrescription(new PrescriptionDTO()
+                var newPrescription = await _prescriptionService.CreatePrescription(new PrescriptionDTO()
                 {
                     Name = prescription.Name,
                     Note = prescription.Note,

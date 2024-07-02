@@ -10,10 +10,11 @@ namespace Pharmacy.Web.Controllers
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
-     
+        private readonly IPatientService _patientService;
 
-        public AccountController(IUserService userService)
+        public AccountController(IUserService userService, IPatientService patientService)
         {
+            _patientService = patientService;
             _userService = userService;
         }
 
@@ -27,9 +28,17 @@ namespace Pharmacy.Web.Controllers
         public async Task<IActionResult> Register(RegisterVWModel model)
         {
             if (ModelState.IsValid)
-            {
-                var user = new UserDTO { UserName = model.Email, Email = model.Email };
-                var result = await _userService.RegisterAsync(user , model.Password); 
+            {var patient = await _patientService.CreatePatient(new PatientDTO
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Address = model.Address,
+                    PhoneNumber = Int32.Parse(model.PhoneNumber),
+                    
+                });
+                var user = new UserDTO { UserName = model.Email, Email = model.Email , PatientId = patient.Id};
+                var result = await _userService.RegisterAsync(user, model.Password);
+                
                 return RedirectToAction("Index", "Home");
 
             }
@@ -49,9 +58,9 @@ namespace Pharmacy.Web.Controllers
             {
                 var result = await _userService.LoginAsync(model.Email, model.Password);
 
-               
-                    return RedirectToAction("Index", "Home");
-                
+
+                return RedirectToAction("Index", "Home");
+
 
             }
 
@@ -65,6 +74,6 @@ namespace Pharmacy.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-       
+
     }
 }

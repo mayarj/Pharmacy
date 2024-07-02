@@ -1,4 +1,5 @@
-﻿using Pharmacy.Domain.Entities;
+﻿using Microsoft.AspNetCore.Http;
+using Pharmacy.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,7 @@ namespace Pharmacy.Domain.IRepositories
         public Task<UserDTO> LoginAsync(string email, string password);
         public Task LogoutAsync();
         public Task<UserDTO> GetUserAsync(string email);
+        public Task<UserDTO> GetLoggedInUser(HttpContext httpContext);
+       
     }
 }

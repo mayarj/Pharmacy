@@ -1,6 +1,13 @@
 ﻿@{
     ViewData["title"] = "OOPS";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (this.User.IsInRole("Admin") || !this.User.Identity.IsAuthenticated)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    }
 }
 
 <section class="flex items-center h-screen p-16 bg-gray-50 dark:bg-gray-700">

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Pharmacy.Application.Interfaces;
 using Pharmacy.Domain.Entities;
 using Pharmacy.Domain.IRepositories;
@@ -35,6 +36,10 @@ namespace Pharmacy.Application.Services
         public async Task<UserDTO> RegisterAsync(UserDTO userDto, string password)
         {
             return await _userReposetory.RegisterAsync(userDto, password);
+        }
+        public async Task<UserDTO> GetLoggedInUser(HttpContext httpContext)
+        {
+            return await _userReposetory.GetLoggedInUser(httpContext);
         }
     }
 }
