@@ -110,7 +110,7 @@ namespace WebTest.Controllers
             ViewBag.Medicines = new SelectList(medicinesSelect, "Value", "Text");
             return View(prescriptionModel);
         }
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = "UserAndAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditPrescriptionVWModel prescription)

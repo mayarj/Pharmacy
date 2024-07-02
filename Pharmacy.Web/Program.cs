@@ -39,7 +39,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddControllersWithViews();
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.AccessDeniedPath = "/Home/Indix";
+    options.AccessDeniedPath = "/Account/AccessDenied";
 });
 builder.Services.AddAuthorization(options =>
 {

@@ -6,6 +6,7 @@ namespace Pharmacy.Web.Controllers
 {
     public class HomeController : Controller
     {
+
         public IActionResult Index()
         {
             return View();
@@ -14,7 +15,6 @@ namespace Pharmacy.Web.Controllers
         {
             return View();
         }
-
         public IActionResult Error()
         {
             return View();

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using Pharmacy.Application.Interfaces;
 using Pharmacy.Web.VWModels.Patients;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Pharmacy.Web.Controllers
 {
@@ -59,8 +60,6 @@ namespace Pharmacy.Web.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _userService.LoginAsync(model.Email, model.Password);
-
-
                 return RedirectToAction("Index", "Home");
 
 
@@ -75,6 +74,8 @@ namespace Pharmacy.Web.Controllers
             await _userService.LogoutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        [Authorize(Policy = "UserOnly")]
         [HttpGet("Account/")]
         [HttpGet("Account/Index")]
         [HttpGet("Account/Profile")]
@@ -116,6 +117,7 @@ namespace Pharmacy.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Policy = "UserOnly")]
         [HttpGet]
         public async Task<IActionResult> Edit()
         {
@@ -142,6 +144,7 @@ namespace Pharmacy.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Policy = "UserOnly")]
         [HttpPost]
         public async Task<IActionResult> Edit(EditProfileVWModel model)
         {
