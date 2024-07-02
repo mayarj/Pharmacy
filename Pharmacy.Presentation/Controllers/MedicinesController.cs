@@ -23,6 +23,8 @@ namespace Pharmacy.Web.Controllers
             _factoryService = factoryService;
             _ingredientService = ingredientService;
         }
+
+        [Authorize(Policy = "UserAndAdmin")]
         public async Task<IActionResult> Index()
         {
             var medicines = await _medicineService.GetAllMedicines();

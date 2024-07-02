@@ -6,14 +6,8 @@ if (this.User.IsInRole("Admin"))
     {
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
-    else if(this.User.IsInRole("User"))
-    {
-        Layout = "~/Views/Shared/_LayoutUser.cshtml";
-    }
-    else
-    {
-        Layout = "~/Views/Shared/_LayoutNoLogin.cshtml";
-    }}
+    
+}
 @if (TempData["ErrorMessage"] != null)
 {
     <div class="alert alert-danger">

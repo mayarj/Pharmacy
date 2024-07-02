@@ -2,7 +2,20 @@
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    bool isAdmin = false;
+    if (this.User.IsInRole("Admin"))
+    {
+        isAdmin = true;
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else if (this.User.IsInRole("User"))
+    {
+        Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutNoLogin.cshtml";
+    }
 }
 
 <div class="container mt-4">
@@ -88,7 +101,7 @@
                     </table>
 
                     <div class="mt-4">
-                        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a>
+                        @if(isAdmin){<a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a>}
                         <a asp-action="Index" class="btn btn-secondary ms-2">Back to List</a>
                     </div>
                 </div>

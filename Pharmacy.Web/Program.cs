@@ -18,11 +18,10 @@ builder.Services.AddDbContext<PharmacyContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
 });
 builder.Services.AddIdentity<User, IdentityRole>()
-    .AddUserManager<UserManager<User>>() // Register UserManager<User>
+    .AddUserManager<UserManager<User>>() 
     .AddEntityFrameworkStores<PharmacyContext>()
     .AddDefaultTokenProviders();
 
-// Move the UserManager registration above the Configure<IdentityOptions> call
 
 
 
@@ -48,7 +47,6 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("UserOnly", policy =>
        policy.RequireRole("User"));
     options.AddPolicy("UserAndAdmin", policy =>
-
     policy.RequireRole("User", "Admin"));
 });
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
@@ -102,7 +100,6 @@ using (var scope = app.Services.CreateScope())
     {
         adminUser = new User { UserName = "admin@example.com", Email = "admin@example.com", Id = "admin@example.com" };
 
-        // Disable the default behavior of generating a new Id
         userManager.UserValidators.Clear();
 
         var result = await userManager.CreateAsync(adminUser, "AdminPassword123!");

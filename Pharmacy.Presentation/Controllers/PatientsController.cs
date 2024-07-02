@@ -21,30 +21,7 @@ namespace Pharmacy.Web.Controllers
             var patients = await _patientService.GetAllPatients();
             return View(patients);
         }
-        [Authorize(Policy = "AdminOnly")]
-        public async Task<IActionResult> Create()
-        {
-            return View();
-        }
-        [Authorize(Policy = "AdminOnly")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreatePatientVWModel patient)
-        {
-            if (ModelState.IsValid)
-            {
-                await _patientService.CreatePatient(new PatientDTO()
-                {
-                    Address = patient.Address,
-                    FirstName = patient.FirstName,
-                    LastName = patient.LastName,
-                    PhoneNumber = patient.PhoneNumber,
-                });
-                return RedirectToAction("Index");
-            }
-
-            return View(patient);
-        }
+        
         [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Edit(int id)
         {

@@ -23,9 +23,13 @@ namespace WebTest.Controllers
             _prescriptionMedicineService = prescriptionMedicineService;
             _prescriptionService = prescriptionService;
         }
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = "UserAndAdmin")]
         public async Task<IActionResult> Index()
         {
+            if (User.IsInRole("User"))
+            {
+                return RedirectToAction("MyPrescriptions", "Prescriptions");
+            }
             var prescriptions = await _prescriptionService.GetAllPrescription();
             return View(prescriptions);
         }
@@ -42,22 +46,39 @@ namespace WebTest.Controllers
             var prescriptions = await _patientService.GetPrescriptions((int)user.PatientId);
             return View(prescriptions);
         }
-        [Authorize(Policy = "AdminOnly")]
+
+        [Authorize(Policy = "UserAndAdmin")]
         public async Task<IActionResult> Create(int id)
         {
+            if(User.IsInRole("User"))
+            {
+                var userDto = await _userService.GetUserAsync(User.Identity.Name);
+                if(userDto.PatientId!=id)
+                {
+                    return NotFound();
+                }
+            }
             var prescription = new CreatePrescriptionVWModel()
             {
                 PatientId = id,
             };
             return View(prescription);
         }
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = "UserAndAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreatePrescriptionVWModel prescription)
         {
             if (ModelState.IsValid)
             {
+                if (User.IsInRole("User"))
+                {
+                    var userDto = await _userService.GetUserAsync(User.Identity.Name);
+                    if (userDto.PatientId != prescription.PatientId)
+                    {
+                        return NotFound();
+                    }
+                }
                 var newPrescription = await _prescriptionService.CreatePrescription(new PrescriptionDTO()
                 {
                     Name = prescription.Name,
@@ -68,7 +89,7 @@ namespace WebTest.Controllers
             }
             return View(prescription);
         }
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = "UserAndAdmin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id is null)
@@ -81,7 +102,14 @@ namespace WebTest.Controllers
             {
                 return NotFound();
             }
-
+            if (User.IsInRole("User"))
+            {
+                var userDto = await _userService.GetUserAsync(User.Identity.Name);
+                if (userDto.PatientId != prescription.PatientId)
+                {
+                    return NotFound();
+                }
+            }
             var filteredMedicines = await _prescriptionMedicineService.GetmedicineByPrescription(prescription.Id);
             var prescriptionModel = new EditPrescriptionVWModel()
             {
@@ -117,6 +145,14 @@ namespace WebTest.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (User.IsInRole("User"))
+                {
+                    var userDto = await _userService.GetUserAsync(User.Identity.Name);
+                    if (userDto.PatientId != prescription.PatientId)
+                    {
+                        return NotFound();
+                    }
+                }
                 await _prescriptionService.UpdatePrescription(new PrescriptionDTO()
                 {
                     Id = prescription.Id,
@@ -149,7 +185,14 @@ namespace WebTest.Controllers
             {
                 return NotFound();
             }
-
+            if (await _userService.GetLoggedInUser(HttpContext) is not null)
+            {
+                var userDto = await _userService.GetUserAsync(User.Identity.Name);
+                if (userDto.PatientId != prescription.PatientId)
+                {
+                    return NotFound();
+                }
+            }
             var filteredMedicines = await _prescriptionMedicineService.GetmedicineByPrescription(prescription.Id);
             var prescriptionModel = new DetailsPrescriptionVWModel()
             {
