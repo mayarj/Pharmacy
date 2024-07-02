@@ -26,11 +26,12 @@ namespace Pharmacy.Infrastructure.Repositories
 
         public async Task<UserDTO> RegisterAsync(UserDTO userDto, string password)
         {
-            var user = new User {
+            var user = new User
+            {
                 Id = userDto.Email,
                 UserName = userDto.UserName,
                 Email = userDto.Email,
-                PatientId = userDto.PatientId,
+                PatientId = userDto.PatientId
             };
             user.CreatedAt = DateTime.Now;
             user.UpdatedAt = DateTime.Now;
@@ -42,15 +43,21 @@ namespace Pharmacy.Infrastructure.Repositories
                 throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
             }
 
+            // Add the user to the "User" role
+            await _userManager.AddToRoleAsync(user, "User");
+
             await _signInManager.SignInAsync(user, isPersistent: false);
-            return new UserDTO {
+
+            return new UserDTO
+            {
                 Email = user.Email,
                 UserName = user.UserName,
                 Id = user.Id,
                 PatientId = userDto.PatientId,
-                Admin = false,
+                Admin = false
             };
         }
+
 
         public async Task<UserDTO> LoginAsync(string email, string password)
         {
@@ -62,15 +69,22 @@ namespace Pharmacy.Infrastructure.Repositories
             }
 
             var user = await _userManager.FindByEmailAsync(email);
+
+            // Retrieve the user's roles
+            var roles = await _userManager.GetRolesAsync(user);
+
+            bool isAdmin = roles.Contains("Admin");
+
             return new UserDTO
             {
                 Email = user.Email,
                 UserName = user.UserName,
                 Id = user.Id,
-                Admin = false,
-                PatientId = user.PatientId,
+                Admin = isAdmin,
+                PatientId = user.PatientId
             };
         }
+
 
         public async Task LogoutAsync()
         {
@@ -80,21 +94,27 @@ namespace Pharmacy.Infrastructure.Repositories
         public async Task<UserDTO> GetUserAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            bool isAdmin = roles.Contains("Admin");
             return new UserDTO
             {
                 Email = user.Email,
                 UserName = user.UserName,
                 Id = user.Id,
+                Admin = isAdmin,
                 PatientId = user.PatientId,
-                Admin = false,
             };
         }
         public async Task<UserDTO> GetLoggedInUser(HttpContext httpContext)
         {
             var user = await _userManager.GetUserAsync(principal: httpContext.User);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            bool isAdmin = roles.Contains("Admin");
             return new UserDTO
             {
-                Admin = false,
+                Admin = isAdmin ,
                 Id = user.Id,
                 Email = user.Email,
                 PatientId  = user.PatientId,

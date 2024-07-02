@@ -4,6 +4,8 @@ using Pharmacy.Domain.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Pharmacy.Web.VWModels.Prescriptions;
 using Pharmacy.Domain.Aggregation;
+using Microsoft.AspNetCore.Authorization;
+
 namespace WebTest.Controllers
 {
     public class PrescriptionsController : Controller
@@ -21,11 +23,13 @@ namespace WebTest.Controllers
             _prescriptionMedicineService = prescriptionMedicineService;
             _prescriptionService = prescriptionService;
         }
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Index()
         {
             var prescriptions = await _prescriptionService.GetAllPrescription();
             return View(prescriptions);
         }
+        [Authorize(Policy = "UserOnly")]
         public async Task<IActionResult> MyPrescriptions()
         {
             var user = await _userService.GetLoggedInUser(HttpContext);
@@ -38,6 +42,7 @@ namespace WebTest.Controllers
             var prescriptions = await _patientService.GetPrescriptions((int)user.PatientId);
             return View(prescriptions);
         }
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Create(int id)
         {
             var prescription = new CreatePrescriptionVWModel()
@@ -46,7 +51,7 @@ namespace WebTest.Controllers
             };
             return View(prescription);
         }
-
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreatePrescriptionVWModel prescription)
@@ -63,6 +68,7 @@ namespace WebTest.Controllers
             }
             return View(prescription);
         }
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id is null)
@@ -104,6 +110,7 @@ namespace WebTest.Controllers
             ViewBag.Medicines = new SelectList(medicinesSelect, "Value", "Text");
             return View(prescriptionModel);
         }
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditPrescriptionVWModel prescription)
@@ -129,7 +136,7 @@ namespace WebTest.Controllers
             ViewBag.Medicines = new SelectList(medicinesSelect, "Value", "Text");
             return View(prescription);
         }
-
+        [Authorize(Policy = "UserAndAdmin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null)
@@ -165,6 +172,7 @@ namespace WebTest.Controllers
 
             return View(prescriptionModel);
         }
+        [Authorize(Policy = "UserAndAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddMedicine(AddMedicineToPrescriptionVWModel medicine)
@@ -183,7 +191,7 @@ namespace WebTest.Controllers
 
         }
 
-
+        [Authorize(Policy = "UserAndAdmin")]
 
         public async Task<IActionResult> EditMedicine(int medicineId, int descriptionId)
         {
@@ -204,6 +212,7 @@ namespace WebTest.Controllers
             return View(descriptionMedicineModel);
 
         }
+        [Authorize(Policy = "UserAndAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditMedicine(EditMedicineInPrescriptionVWModel model)
@@ -223,6 +232,7 @@ namespace WebTest.Controllers
             return RedirectToAction(nameof(EditMedicine), new { medicineId = model.MedicineId, descriptionId = model.PrescriptionId });
 
         }
+        [Authorize(Policy = "UserAndAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
@@ -240,6 +250,7 @@ namespace WebTest.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
+        [Authorize(Policy = "UserAndAdmin")]
 
         [HttpPost]
         [ValidateAntiForgeryToken]

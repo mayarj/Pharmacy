@@ -14,17 +14,19 @@ namespace Pharmacy.Web.Controllers
         {
             _factoryService = factoryService;
         }
-        
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Index()
         {
             var factories = await _factoryService.GetAllFactories();
             return View(factories);
         }
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
+        [Authorize(Policy = "AdminOnly")]
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -40,7 +42,7 @@ namespace Pharmacy.Web.Controllers
             }
             return View(factory);
         }
-
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null)
@@ -58,6 +60,7 @@ namespace Pharmacy.Web.Controllers
             ViewBag.Medicines = filteredMedicines;
             return View(factory);
         }
+        [Authorize(Policy = "AdminOnly")]
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -76,6 +79,7 @@ namespace Pharmacy.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id is null)
@@ -97,7 +101,7 @@ namespace Pharmacy.Web.Controllers
 
             return View(factoryModel);
         }
-
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditFactoryVWModel factory)

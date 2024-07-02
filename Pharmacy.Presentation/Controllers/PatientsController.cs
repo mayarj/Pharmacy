@@ -3,6 +3,8 @@ using Pharmacy.Application.Interfaces;
 using Pharmacy.Domain.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Pharmacy.Web.VWModels.Patients;
+using Microsoft.AspNetCore.Authorization;
+
 namespace Pharmacy.Web.Controllers
 {
     public class PatientsController : Controller
@@ -13,15 +15,18 @@ namespace Pharmacy.Web.Controllers
         {
             _patientService = patientService;
         }
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Index()
         {
             var patients = await _patientService.GetAllPatients();
             return View(patients);
         }
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Create()
         {
             return View();
         }
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreatePatientVWModel patient)
@@ -40,7 +45,7 @@ namespace Pharmacy.Web.Controllers
 
             return View(patient);
         }
-
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Edit(int id)
         {
             var patient = await _patientService.GetPatientById(id);
@@ -60,7 +65,7 @@ namespace Pharmacy.Web.Controllers
 
             return View(patientModel);
         }
-
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, EditPatientVWModel patient)
@@ -86,7 +91,7 @@ namespace Pharmacy.Web.Controllers
             }
             return View(patient);
         }
-
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
@@ -94,6 +99,7 @@ namespace Pharmacy.Web.Controllers
             await _patientService.DeletePatient(id);
             return RedirectToAction(nameof(Index));
         }
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null)
