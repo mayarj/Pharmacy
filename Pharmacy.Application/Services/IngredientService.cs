@@ -17,7 +17,7 @@ namespace Pharmacy.Application.Services
         {
             _ingredientRepository = ingredientRepository;
         }
-        public async Task<EntitieIngredient> CreateIngredient(EntitieIngredient ingredient)
+        public async Task<IngredientDTO> CreateIngredient(IngredientDTO ingredient)
         {
             return await _ingredientRepository.CreateIngredient(ingredient);
         }
@@ -32,17 +32,17 @@ namespace Pharmacy.Application.Services
             await _ingredientRepository.DeleteIngredient(id);
         }
 
-        public async Task<IEnumerable<EntitieIngredient>> GetAllIngredients()
+        public async Task<IEnumerable<IngredientDTO>> GetAllIngredients()
         {
             return await _ingredientRepository.GetAllIngredients();
         }
 
-        public async Task<EntitieIngredient?> GetIngredientById(int id)
+        public async Task<IngredientDTO?> GetIngredientById(int id)
         {
             return await _ingredientRepository.GetIngredientById(id);
         }
 
-        public async Task<EntitieIngredient?> UpdateIngredient(EntitieIngredient ingredient)
+        public async Task<IngredientDTO?> UpdateIngredient(IngredientDTO ingredient)
         {
             return await _ingredientRepository.UpdateIngredient(ingredient);
         }

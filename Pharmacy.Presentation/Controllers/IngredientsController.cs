@@ -32,7 +32,7 @@ namespace Pharmacy.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _ingredientService.CreateIngredient(new EntitieIngredient()
+                await _ingredientService.CreateIngredient(new IngredientDTO()
                 {
                     Name = ingredient.Name,
                     Description = ingredient.Description,
@@ -103,7 +103,7 @@ namespace Pharmacy.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _ingredientService.UpdateIngredient(new EntitieIngredient()
+                await _ingredientService.UpdateIngredient(new IngredientDTO()
                 {
                     Id = ingredient.Id,
                     Name = ingredient.Name,

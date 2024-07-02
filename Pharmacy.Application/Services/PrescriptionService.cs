@@ -18,7 +18,7 @@ namespace Pharmacy.Application.Services
             _prescriptionRepository = prescriptionRepository;   
         }
 
-        public async Task<EntitiePrescription> CreatePrescription(EntitiePrescription Prescription)
+        public async Task<PrescriptionDTO> CreatePrescription(PrescriptionDTO Prescription)
         {
            return await _prescriptionRepository.CreatePrescription(Prescription);
         }
@@ -28,17 +28,17 @@ namespace Pharmacy.Application.Services
             await _prescriptionRepository.DeletePrescription(id);
         }
 
-        public async Task<IEnumerable<EntitiePrescription>> GetAllPrescription()
+        public async Task<IEnumerable<PrescriptionDTO>> GetAllPrescription()
         {
            return await _prescriptionRepository.GetAllPrescription();
         }
 
-        public async Task<EntitiePrescription?> GetPrescriptionById(int id)
+        public async Task<PrescriptionDTO?> GetPrescriptionById(int id)
         {
            return await _prescriptionRepository.GetPrescriptionById(id);
         }
 
-        public async Task<EntitiePrescription> UpdatePrescription(EntitiePrescription Prescription)
+        public async Task<PrescriptionDTO> UpdatePrescription(PrescriptionDTO Prescription)
         {
             return await _prescriptionRepository.UpdatePrescription(Prescription);                       
         }

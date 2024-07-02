@@ -19,7 +19,7 @@ namespace Pharmacy.Infrastructure.Repositories
         {
             _pharmacyContext = pharmacyContext;
         }
-        async Task<EntitiePrescription> IPrescriptionRepository.CreatePrescription(EntitiePrescription prescription)
+        async Task<PrescriptionDTO> IPrescriptionRepository.CreatePrescription(PrescriptionDTO prescription)
         {
             var p = new Prescription
             {
@@ -30,7 +30,7 @@ namespace Pharmacy.Infrastructure.Repositories
             };
             await _pharmacyContext.Prescriptions.AddAsync(p);
             await _pharmacyContext.SaveChangesAsync();
-            var prescriptionDto = new EntitiePrescription()
+            var prescriptionDto = new PrescriptionDTO()
             {
                 Id = p.Id,
                 PatientId = p.PatientId,
@@ -51,9 +51,9 @@ namespace Pharmacy.Infrastructure.Repositories
             }
         }
 
-        async Task<IEnumerable<EntitiePrescription>> IPrescriptionRepository.GetAllPrescription()
+        async Task<IEnumerable<PrescriptionDTO>> IPrescriptionRepository.GetAllPrescription()
         {
-            return await _pharmacyContext.Prescriptions.Select(p => new EntitiePrescription
+            return await _pharmacyContext.Prescriptions.Select(p => new PrescriptionDTO
             {
                 Id = p.Id,
                 PatientId = p.PatientId,
@@ -65,10 +65,10 @@ namespace Pharmacy.Infrastructure.Repositories
 
 
 
-        async Task<EntitiePrescription?> IPrescriptionRepository.GetPrescriptionById(int id)
+        async Task<PrescriptionDTO?> IPrescriptionRepository.GetPrescriptionById(int id)
         {
             var prescription = await _pharmacyContext.Prescriptions.Include(p=>p.Patient).FirstOrDefaultAsync(p => p.Id == id);
-            return prescription != null ? new EntitiePrescription
+            return prescription != null ? new PrescriptionDTO
             {
                 Id = prescription.Id,
                 PatientId = prescription.PatientId,
@@ -77,7 +77,7 @@ namespace Pharmacy.Infrastructure.Repositories
                 PatientName = prescription.Patient.FirstName + " " + prescription.Patient.LastName,
             } : null;
         }
-        async Task<EntitiePrescription> IPrescriptionRepository.UpdatePrescription(EntitiePrescription prescription)
+        async Task<PrescriptionDTO> IPrescriptionRepository.UpdatePrescription(PrescriptionDTO prescription)
         {
             if (prescription is null)
             {

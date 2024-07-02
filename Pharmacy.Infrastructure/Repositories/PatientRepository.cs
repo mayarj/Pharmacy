@@ -17,9 +17,9 @@ namespace Pharmacy.Infrastructure.Repositories
             _pharmacyContext = pharmacyContext;
         }
 
-        async Task<IEnumerable<EntitiePatient> >IPatientRepository.GetAllPatients()
+        async Task<IEnumerable<PatientDTO> >IPatientRepository.GetAllPatients()
         {
-            return await _pharmacyContext.Patients.Select(p => new EntitiePatient
+            return await _pharmacyContext.Patients.Select(p => new PatientDTO
             {
                 Id = p.Id,
                 FirstName = p.FirstName,
@@ -31,10 +31,10 @@ namespace Pharmacy.Infrastructure.Repositories
             
         }
 
-        async Task<EntitiePatient?> IPatientRepository.GetPatientById(int id)
+        async Task<PatientDTO?> IPatientRepository.GetPatientById(int id)
         {
             var patient = await _pharmacyContext.Patients.FirstOrDefaultAsync(p => p.Id == id);
-            return patient != null ? new EntitiePatient
+            return patient != null ? new PatientDTO
             {
                 Id = patient.Id,
                 FirstName = patient.FirstName,
@@ -44,7 +44,7 @@ namespace Pharmacy.Infrastructure.Repositories
             } : null;
         }
 
-        async Task<EntitiePatient> IPatientRepository.CreatePatient(EntitiePatient patient)
+        async Task<PatientDTO> IPatientRepository.CreatePatient(PatientDTO patient)
         {
             var newPatient = new Patient
             {
@@ -56,7 +56,7 @@ namespace Pharmacy.Infrastructure.Repositories
 
             await _pharmacyContext.Patients.AddAsync(newPatient);
             await _pharmacyContext.SaveChangesAsync();
-            var patientDto = new EntitiePatient()
+            var patientDto = new PatientDTO()
             {
                 Id = newPatient.Id,
                 FirstName = newPatient.FirstName,
@@ -67,7 +67,7 @@ namespace Pharmacy.Infrastructure.Repositories
             return patientDto;
         }
 
-        async Task<EntitiePatient?> IPatientRepository.UpdatePatient(EntitiePatient patient)
+        async Task<PatientDTO?> IPatientRepository.UpdatePatient(PatientDTO patient)
         {
             if (patient is null)
             {
@@ -95,9 +95,9 @@ namespace Pharmacy.Infrastructure.Repositories
             }
         }
 
-        async Task<IEnumerable<EntitiePrescription>>   IPatientRepository.GetPrescriptions( int patientId)
+        async Task<IEnumerable<PrescriptionDTO>>   IPatientRepository.GetPrescriptions( int patientId)
         {
-            return await _pharmacyContext.Prescriptions.Where(p => p.PatientId == patientId).Select(p => new EntitiePrescription
+            return await _pharmacyContext.Prescriptions.Where(p => p.PatientId == patientId).Select(p => new PrescriptionDTO
             {
                 Id = p.Id,
                 PatientId = p.PatientId,

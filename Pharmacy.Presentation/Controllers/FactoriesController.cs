@@ -32,7 +32,7 @@ namespace Pharmacy.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _factoryService.CreateFactory(new EntitieFactory()
+                await _factoryService.CreateFactory(new FactoryDTO()
                 {
                     Name = factory.Name,
                 });
@@ -104,7 +104,7 @@ namespace Pharmacy.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _factoryService.UpdateFactory(new EntitieFactory()
+                await _factoryService.UpdateFactory(new FactoryDTO()
                 {
                     Id = factory.Id,
                     Name = factory.Name,

@@ -108,7 +108,7 @@ namespace Pharmacy.Infrastructure.Repositories
                    Id = pm.Id,
                    MedicineId = pm.MedicineId,
                    PrescriptionId = pm.PrescriptionId,
-                   Medicine = new EntitieMedicine()
+                   Medicine = new MedicineDTO()
                    {
                        Id = pm.Medicine.Id,
                        Name = pm.Medicine.Name,
@@ -123,7 +123,7 @@ namespace Pharmacy.Infrastructure.Repositories
                        CategoryName = pm.Medicine.Category.Name,
                        FactoryName = pm.Medicine.Factory.Name,
                    },
-                   Prescription = new EntitiePrescription()
+                   Prescription = new PrescriptionDTO()
                    {
                        Id = pm.Prescription.Id,
                        Name = pm.Prescription.Name,

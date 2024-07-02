@@ -9,10 +9,10 @@ namespace Pharmacy.Application.Interfaces
 {
     public interface IIngredientService
     {
-        public Task<IEnumerable<EntitieIngredient>> GetAllIngredients();
-        public Task<EntitieIngredient?> GetIngredientById(int id);
-        public Task<EntitieIngredient> CreateIngredient(EntitieIngredient ingredient);
-        public Task<EntitieIngredient?> UpdateIngredient(EntitieIngredient ingredient);
+        public Task<IEnumerable<IngredientDTO>> GetAllIngredients();
+        public Task<IngredientDTO?> GetIngredientById(int id);
+        public Task<IngredientDTO> CreateIngredient(IngredientDTO ingredient);
+        public Task<IngredientDTO?> UpdateIngredient(IngredientDTO ingredient);
         public Task DeleteIngredient(int id);
 
         //public Task<bool> IsMedicineAssociatedWithIngredient(int activeSubstanceId);

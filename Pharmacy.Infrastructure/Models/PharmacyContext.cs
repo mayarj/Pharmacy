@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Pharmacy.Infrastructure.Models
 {
-    public partial class PharmacyContext : DbContext
+    public partial class PharmacyContext : IdentityDbContext<User,IdentityRole,string>
     {
         public PharmacyContext()
         {
@@ -24,7 +26,7 @@ namespace Pharmacy.Infrastructure.Models
         public virtual DbSet<Patient> Patients { get; set; } = null!;
         public virtual DbSet<Prescription> Prescriptions { get; set; } = null!;
         public virtual DbSet<PrescriptionMedicine> PrescriptionMedicines { get; set; } = null!;
-       // public virtual DbSet<User> Users { get; set; } = null!;
+        public virtual DbSet<User> Users { get; set; } = null!;
     
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -174,12 +176,13 @@ namespace Pharmacy.Infrastructure.Models
                     .WithMany(p => p.PrescriptionMedicines)
                     .HasForeignKey(d => d.PrescriptionId)
                     .HasConstraintName("FK_PrescriptionMedicine_Prescription");
-            });
+            }); 
 
            
             
 
-            OnModelCreatingPartial(modelBuilder);
+            //OnModelCreatingPartial(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

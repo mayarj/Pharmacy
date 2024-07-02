@@ -18,7 +18,7 @@ namespace Pharmacy.Infrastructure.Repositories
         {
             _pharmacyContext = pharmacyContext;
         }
-        async Task <EntitieFactory> IFactoryRepository.CreateFactory(EntitieFactory factory)
+        async Task <FactoryDTO> IFactoryRepository.CreateFactory(FactoryDTO factory)
         {
             if (factory is null)
             {
@@ -44,19 +44,19 @@ namespace Pharmacy.Infrastructure.Repositories
             }
         }
 
-        async Task <IEnumerable<EntitieFactory>> IFactoryRepository.GetAllFactories()
+        async Task <IEnumerable<FactoryDTO>> IFactoryRepository.GetAllFactories()
         {
-            return await _pharmacyContext.Factories.Select(p => new EntitieFactory
+            return await _pharmacyContext.Factories.Select(p => new FactoryDTO
             {
                 Id = p.Id,
                 Name = p.Name,
             }).ToListAsync();
         }
 
-        async Task <IEnumerable<EntitieMedicine>> IFactoryRepository.GetAllMedicendelongToFactory(int id)
+        async Task <IEnumerable<MedicineDTO>> IFactoryRepository.GetAllMedicendelongToFactory(int id)
         {
  
-                return await _pharmacyContext.Medicines.Where(p => p.FactoryId == id).Select(p => new EntitieMedicine
+                return await _pharmacyContext.Medicines.Where(p => p.FactoryId == id).Select(p => new MedicineDTO
                 {
                     Id = p.Id,
                     Name = p.Name,
@@ -72,10 +72,10 @@ namespace Pharmacy.Infrastructure.Repositories
                 }).ToListAsync();
         }
 
-        async Task <EntitieFactory?> IFactoryRepository.GetFactoryById(int id)
+        async Task <FactoryDTO?> IFactoryRepository.GetFactoryById(int id)
         {
             var factory = await _pharmacyContext.Factories.FirstOrDefaultAsync(p => p.Id == id);
-            return factory != null ? new EntitieFactory
+            return factory != null ? new FactoryDTO
             {
                 Id = factory.Id,
                 Name = factory.Name,
@@ -83,7 +83,7 @@ namespace Pharmacy.Infrastructure.Repositories
             } : null;
         }
 
-        async Task <EntitieFactory> IFactoryRepository.UpdateFactory(EntitieFactory factory)
+        async Task <FactoryDTO> IFactoryRepository.UpdateFactory(FactoryDTO factory)
         {
 
             var existingFactory = _pharmacyContext.Factories.FirstOrDefault(p => p.Id == factory.Id);

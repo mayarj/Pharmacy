@@ -13,7 +13,7 @@ namespace Pharmacy.Domain.Aggregation
         public int MedicineId { get; set; }
         public int Count { get; set; }
         public int Id { get; set; }
-        public EntitiePrescription Prescription { get; set; }
-        public EntitieMedicine Medicine { get; set; }
+        public PrescriptionDTO Prescription { get; set; }
+        public MedicineDTO Medicine { get; set; }
     }
 }

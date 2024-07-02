@@ -28,7 +28,7 @@ namespace Pharmacy.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _patientService.CreatePatient(new EntitiePatient()
+                await _patientService.CreatePatient(new PatientDTO()
                 {
                     Address = patient.Address,
                     FirstName = patient.FirstName,
@@ -73,7 +73,7 @@ namespace Pharmacy.Web.Controllers
                 {
                     return NotFound();
                 }
-                await _patientService.UpdatePatient(new EntitiePatient()
+                await _patientService.UpdatePatient(new PatientDTO()
                 {
                     Id = patient.Id,
                     FirstName = patient.FirstName,

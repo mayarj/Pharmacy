@@ -20,7 +20,7 @@ namespace Pharmacy.Infrastructure.Repositories
         {
             _pharmacyContext = pharmacyContext;
         }
-        async Task<EntitieMedicine> IMedicineRepository.CreateMedicine(EntitieMedicine medicine)
+        async Task<MedicineDTO> IMedicineRepository.CreateMedicine(MedicineDTO medicine)
         {
             Medicine addMedicen = new Medicine
             {
@@ -52,9 +52,9 @@ namespace Pharmacy.Infrastructure.Repositories
             throw new Exception(" no such a medicine ");
         }
 
-        async Task<IEnumerable<EntitieMedicine>> IMedicineRepository.GetAllMedicines()
+        async Task<IEnumerable<MedicineDTO>> IMedicineRepository.GetAllMedicines()
         {
-            return await _pharmacyContext.Medicines.Select(p => new EntitieMedicine
+            return await _pharmacyContext.Medicines.Select(p => new MedicineDTO
             {
                 Id = p.Id,
                 Name = p.Name,
@@ -116,11 +116,11 @@ namespace Pharmacy.Infrastructure.Repositories
             } : null;
         }*/
 
-        async Task<EntitieMedicine?> IMedicineRepository.GetMedicineById(int id)
+        async Task<MedicineDTO?> IMedicineRepository.GetMedicineById(int id)
         {
             var medicine = _pharmacyContext.Medicines
         .Where(p => p.Id == id)
-        .Select(p => new EntitieMedicine
+        .Select(p => new MedicineDTO
         {
             Id = p.Id,
             Name = p.Name,
@@ -141,7 +141,7 @@ namespace Pharmacy.Infrastructure.Repositories
             return medicine;
         }
 
-        async Task<EntitieMedicine> IMedicineRepository.UpdateMedicine(EntitieMedicine medicine)
+        async Task<MedicineDTO> IMedicineRepository.UpdateMedicine(MedicineDTO medicine)
         {
             if(medicine.ActiveSubstanceId is null)
             {

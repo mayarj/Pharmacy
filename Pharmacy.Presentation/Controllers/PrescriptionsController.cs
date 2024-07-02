@@ -39,7 +39,7 @@ namespace WebTest.Controllers
         {
             if (ModelState.IsValid)
             {
-                var newPrescription  = await _prescriptionService.CreatePrescription(new EntitiePrescription()
+                var newPrescription  = await _prescriptionService.CreatePrescription(new PrescriptionDTO()
                 {
                     Name = prescription.Name,
                     Note = prescription.Note,
@@ -96,7 +96,7 @@ namespace WebTest.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _prescriptionService.UpdatePrescription(new EntitiePrescription()
+                await _prescriptionService.UpdatePrescription(new PrescriptionDTO()
                 {
                     Id = prescription.Id,
                     Note = prescription.Note,

@@ -20,7 +20,7 @@ namespace Pharmacy.Infrastructure.Repositories
             _pharmacyContext = pharmacyContext;
 
         }
-        async Task<EntitieIngredient> IIngredientRepository.CreateIngredient(EntitieIngredient ingredient)
+        async Task<IngredientDTO> IIngredientRepository.CreateIngredient(IngredientDTO ingredient)
         {
 
             _pharmacyContext.Ingredients.Add(new Ingredient
@@ -43,9 +43,9 @@ namespace Pharmacy.Infrastructure.Repositories
             }
         }
 
-        async Task <IEnumerable<EntitieIngredient>> IIngredientRepository.GetAllIngredients()
+        async Task <IEnumerable<IngredientDTO>> IIngredientRepository.GetAllIngredients()
         {
-            return await  _pharmacyContext.Ingredients.Select(p => new EntitieIngredient
+            return await  _pharmacyContext.Ingredients.Select(p => new IngredientDTO
             {
                 Id = p.Id,
                 Name = p.Name,
@@ -54,10 +54,10 @@ namespace Pharmacy.Infrastructure.Repositories
             }).ToListAsync();
         }
 
-        async Task <EntitieIngredient?> IIngredientRepository.GetIngredientById(int id)
+        async Task <IngredientDTO?> IIngredientRepository.GetIngredientById(int id)
         {
             var ingredient = await _pharmacyContext.Ingredients.FirstOrDefaultAsync(p => p.Id == id);
-            return ingredient != null ? new EntitieIngredient
+            return ingredient != null ? new IngredientDTO
             {
                 Id = ingredient.Id,
                 Name = ingredient.Name,
@@ -66,7 +66,7 @@ namespace Pharmacy.Infrastructure.Repositories
             } : null;
         }
 
-        async Task <EntitieIngredient> IIngredientRepository.UpdateIngredient(EntitieIngredient ingredient)
+        async Task <IngredientDTO> IIngredientRepository.UpdateIngredient(IngredientDTO ingredient)
         {
             var existingIngredient = await _pharmacyContext.Ingredients.FirstOrDefaultAsync(p => p.Id == ingredient.Id);
             if (existingIngredient != null)

@@ -9,13 +9,13 @@ namespace Pharmacy.Application.Interfaces
 {
     public interface IPatientService
     {
-        public Task<IEnumerable<EntitiePatient>> GetAllPatients();
+        public Task<IEnumerable<PatientDTO>> GetAllPatients();
 
-        public Task<EntitiePatient?> GetPatientById(int id);
-        public Task<EntitiePatient> CreatePatient(EntitiePatient patient);
-        public Task<EntitiePatient?> UpdatePatient(EntitiePatient patient);
+        public Task<PatientDTO?> GetPatientById(int id);
+        public Task<PatientDTO> CreatePatient(PatientDTO patient);
+        public Task<PatientDTO?> UpdatePatient(PatientDTO patient);
         public Task DeletePatient(int id);
-        public Task<IEnumerable<EntitiePrescription>> GetPrescriptions(int patientId);
+        public Task<IEnumerable<PrescriptionDTO>> GetPrescriptions(int patientId);
 
     }
 }

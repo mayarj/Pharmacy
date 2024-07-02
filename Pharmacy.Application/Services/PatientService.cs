@@ -22,21 +22,21 @@ namespace Pharmacy.Application.Services
 
         }
 
-        public async Task<IEnumerable<EntitiePatient>> GetAllPatients()
+        public async Task<IEnumerable<PatientDTO>> GetAllPatients()
         {
             return await _patientRepository.GetAllPatients();
         }
-        public async Task<EntitiePatient?> GetPatientById(int id)
+        public async Task<PatientDTO?> GetPatientById(int id)
         {
             return await _patientRepository.GetPatientById(id);
         }
 
-        public async Task<EntitiePatient> CreatePatient(EntitiePatient patient)
+        public async Task<PatientDTO> CreatePatient(PatientDTO patient)
         {
             return await _patientRepository.CreatePatient(patient);
         }
 
-        public async Task<EntitiePatient?> UpdatePatient(EntitiePatient patient)
+        public async Task<PatientDTO?> UpdatePatient(PatientDTO patient)
         {
             return await _patientRepository.UpdatePatient(patient);
         }
@@ -46,7 +46,7 @@ namespace Pharmacy.Application.Services
             await _patientRepository.DeletePatient(id);
         }
 
-        public async Task<IEnumerable<EntitiePrescription>> GetPrescriptions(int patientId)
+        public async Task<IEnumerable<PrescriptionDTO>> GetPrescriptions(int patientId)
         {
             return await _patientRepository.GetPrescriptions(patientId);
         }

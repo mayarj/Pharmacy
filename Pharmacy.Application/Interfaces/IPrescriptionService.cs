@@ -9,10 +9,10 @@ namespace Pharmacy.Application.Interfaces
 {
     public interface IPrescriptionService
     {
-        public Task<IEnumerable<EntitiePrescription>> GetAllPrescription();
-        public Task<EntitiePrescription?> GetPrescriptionById(int id);
-        public Task<EntitiePrescription> CreatePrescription(EntitiePrescription Prescription);
-        public Task<EntitiePrescription> UpdatePrescription(EntitiePrescription Prescription);
+        public Task<IEnumerable<PrescriptionDTO>> GetAllPrescription();
+        public Task<PrescriptionDTO?> GetPrescriptionById(int id);
+        public Task<PrescriptionDTO> CreatePrescription(PrescriptionDTO Prescription);
+        public Task<PrescriptionDTO> UpdatePrescription(PrescriptionDTO Prescription);
         public Task DeletePrescription(int id);
     }
 }

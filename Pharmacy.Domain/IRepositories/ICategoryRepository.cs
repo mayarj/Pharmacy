@@ -9,13 +9,13 @@ namespace Pharmacy.Domain.IRepositories
 {
     public interface ICategoryRepository
     {
-        public Task <IEnumerable<EntitieCategory>> GetAllCatagories();
-        public Task <EntitieCategory?> GetCategoryById(int id);
-        public Task <EntitieCategory> CreateCategory(EntitieCategory category);
-        public Task<EntitieCategory?> UpdateCategory(EntitieCategory category);
+        public Task <IEnumerable<CategoryDTO>> GetAllCatagories();
+        public Task <CategoryDTO?> GetCategoryById(int id);
+        public Task <CategoryDTO> CreateCategory(CategoryDTO category);
+        public Task<CategoryDTO?> UpdateCategory(CategoryDTO category);
         public Task DeleteCategory(int id);
 
-        public Task<IEnumerable<EntitieMedicine>> GetAllMedicenBilongToCatagory(int id);
+        public Task<IEnumerable<MedicineDTO>> GetAllMedicenBilongToCatagory(int id);
         public Task <bool> IsMedicineAssociatedWithCategory(int categoryId);
 
     }

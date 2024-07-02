@@ -10,10 +10,10 @@ namespace Pharmacy.Application.Interfaces
 {
     public interface IMedicineService
     {
-        public Task<IEnumerable<EntitieMedicine>> GetAllMedicines();
-        public Task<EntitieMedicine?> GetMedicineById(int id);
-        public Task<EntitieMedicine> CreateMedicine(EntitieMedicine medicine);
-        public Task<EntitieMedicine> UpdateMedicine(EntitieMedicine medicine);
+        public Task<IEnumerable<MedicineDTO>> GetAllMedicines();
+        public Task<MedicineDTO?> GetMedicineById(int id);
+        public Task<MedicineDTO> CreateMedicine(MedicineDTO medicine);
+        public Task<MedicineDTO> UpdateMedicine(MedicineDTO medicine);
         public Task DeleteMedicine(int id);
 
         //EntitieIngredient? GetMedicineActiveSubstanceById(int activeSubstanceId);

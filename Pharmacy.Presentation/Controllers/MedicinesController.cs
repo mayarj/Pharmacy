@@ -62,7 +62,7 @@ namespace Pharmacy.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _medicineService.CreateMedicine(new EntitieMedicine()
+                await _medicineService.CreateMedicine(new MedicineDTO()
                 {
                     Name = medicine.Name,
                     Description = medicine.Description,
@@ -162,7 +162,7 @@ namespace Pharmacy.Web.Controllers
             if (ModelState.IsValid)
             {
 
-                await _medicineService.UpdateMedicine(new EntitieMedicine()
+                await _medicineService.UpdateMedicine(new MedicineDTO()
                 {
                     Id = medicine.Id,
                     Name = medicine.Name,

@@ -36,7 +36,7 @@ namespace Pharmacy.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _categoryService.CreateCategory(new EntitieCategory()
+                await _categoryService.CreateCategory(new CategoryDTO()
                 {
                     Name = category.Name,
                 });
@@ -108,7 +108,7 @@ namespace Pharmacy.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _categoryService.UpdateCategory(new EntitieCategory()
+                await _categoryService.UpdateCategory(new CategoryDTO()
                 {
                     Id = category.Id,
                     Name = category.Name,

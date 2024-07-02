@@ -19,7 +19,7 @@ namespace Pharmacy.Infrastructure.Repositories
             _pharmacyContext = pharmacyContext;
         }
 
-        async Task<EntitieCategory> ICategoryRepository.CreateCategory(EntitieCategory category)
+        async Task<CategoryDTO> ICategoryRepository.CreateCategory(CategoryDTO category)
         {
 
             if (category is null)
@@ -53,17 +53,17 @@ namespace Pharmacy.Infrastructure.Repositories
             }
 
         }
-        async Task<IEnumerable<EntitieCategory>> ICategoryRepository.GetAllCatagories()
+        async Task<IEnumerable<CategoryDTO>> ICategoryRepository.GetAllCatagories()
         {
-            return await _pharmacyContext.Categories.Select(p => new EntitieCategory
+            return await _pharmacyContext.Categories.Select(p => new CategoryDTO
             {
                 Id = p.Id,
                 Name = p.Name,
             }).ToListAsync();
         }
-        async Task<IEnumerable<EntitieMedicine>> ICategoryRepository.GetAllMedicenBilongToCatagory(int id)
+        async Task<IEnumerable<MedicineDTO>> ICategoryRepository.GetAllMedicenBilongToCatagory(int id)
         {
-            return await _pharmacyContext.Medicines.Where(p => p.CategoryId == id).Select(p => new EntitieMedicine
+            return await _pharmacyContext.Medicines.Where(p => p.CategoryId == id).Select(p => new MedicineDTO
             {
                 Id = p.Id,
                 Name = p.Name,
@@ -79,10 +79,10 @@ namespace Pharmacy.Infrastructure.Repositories
             }).ToListAsync();
         }
 
-        async Task<EntitieCategory?> ICategoryRepository.GetCategoryById(int id)
+        async Task<CategoryDTO?> ICategoryRepository.GetCategoryById(int id)
         {
             var category = await _pharmacyContext.Categories.FirstOrDefaultAsync(p => p.Id == id);
-            return category is not null ? new EntitieCategory
+            return category is not null ? new CategoryDTO
             {
                 Id = category.Id,
                 Name = category.Name,
@@ -90,7 +90,7 @@ namespace Pharmacy.Infrastructure.Repositories
             } : null;
         }
 
-        async Task<EntitieCategory?> ICategoryRepository.UpdateCategory(EntitieCategory category)
+        async Task<CategoryDTO?> ICategoryRepository.UpdateCategory(CategoryDTO category)
         {
             if (category is null)
             {
@@ -102,7 +102,7 @@ namespace Pharmacy.Infrastructure.Repositories
                 existingCategory.Name = category.Name;
 
                 await _pharmacyContext.SaveChangesAsync();
-                EntitieCategory entitieCategory = new EntitieCategory
+                CategoryDTO entitieCategory = new CategoryDTO
                 {
                     Id = existingCategory.Id,
                     Name = existingCategory.Name,

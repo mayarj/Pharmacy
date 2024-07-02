@@ -23,7 +23,7 @@ namespace Pharmacy.Application.Services
 
 
 
-        public async Task<EntitieMedicine> CreateMedicine(EntitieMedicine medicine)
+        public async Task<MedicineDTO> CreateMedicine(MedicineDTO medicine)
         {
             if (medicine.ActiveSubstanceId is null)
             {
@@ -49,7 +49,7 @@ namespace Pharmacy.Application.Services
             await _medicineRepository.DeleteMedicine(id);
         }
 
-        public async Task<IEnumerable<EntitieMedicine>> GetAllMedicines()
+        public async Task<IEnumerable<MedicineDTO>> GetAllMedicines()
         {
             return await _medicineRepository.GetAllMedicines();
         }
@@ -59,7 +59,7 @@ namespace Pharmacy.Application.Services
             return await _medicineRepository.GetIngredients(medicineId);
         }
 
-        public async Task<EntitieMedicine?> GetMedicineById(int id)
+        public async Task<MedicineDTO?> GetMedicineById(int id)
         {
             return await _medicineRepository.GetMedicineById(id);
         }
@@ -70,7 +70,7 @@ namespace Pharmacy.Application.Services
         }
 
 
-        public async Task<EntitieMedicine> UpdateMedicine(EntitieMedicine medicine)
+        public async Task<MedicineDTO> UpdateMedicine(MedicineDTO medicine)
         {
             return await _medicineRepository.UpdateMedicine(medicine);
         }

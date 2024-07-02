@@ -19,7 +19,7 @@ namespace Pharmacy.Application.Services
 
         }
 
-        public async Task<EntitieCategory> CreateCategory(EntitieCategory category)
+        public async Task<CategoryDTO> CreateCategory(CategoryDTO category)
         {
             return await _categoryRepository.CreateCategory(category);
         }
@@ -38,22 +38,22 @@ namespace Pharmacy.Application.Services
 
         }
 
-        public async Task<IEnumerable<EntitieCategory>> GetAllCatagories()
+        public async Task<IEnumerable<CategoryDTO>> GetAllCatagories()
         {
             return await _categoryRepository.GetAllCatagories();
         }
 
-        public async Task<IEnumerable<EntitieMedicine>> GetAllMedicenBilongToCatagory(int id)
+        public async Task<IEnumerable<MedicineDTO>> GetAllMedicenBilongToCatagory(int id)
         {
             return await _categoryRepository.GetAllMedicenBilongToCatagory(id);
         }
 
-        public async Task<EntitieCategory?> GetCategoryById(int id)
+        public async Task<CategoryDTO?> GetCategoryById(int id)
         {
             return await _categoryRepository.GetCategoryById(id);
         }
 
-        public async Task<EntitieCategory?>  UpdateCategory(EntitieCategory category)
+        public async Task<CategoryDTO?>  UpdateCategory(CategoryDTO category)
         {
             return await _categoryRepository.UpdateCategory(category);
         }

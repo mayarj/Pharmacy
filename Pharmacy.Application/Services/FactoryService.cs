@@ -18,7 +18,7 @@ namespace Pharmacy.Application.Services
             _factoryRepository = factoryRepository; 
 
         }
-        public async Task<EntitieFactory> CreateFactory(EntitieFactory factory)
+        public async Task<FactoryDTO> CreateFactory(FactoryDTO factory)
         {
             return await _factoryRepository.CreateFactory(factory);
         }
@@ -32,23 +32,23 @@ namespace Pharmacy.Application.Services
             await _factoryRepository.DeleteFactory(id);
         }
 
-        public async Task<IEnumerable<EntitieFactory>> GetAllFactories()
+        public async Task<IEnumerable<FactoryDTO>> GetAllFactories()
         {
             return await _factoryRepository.GetAllFactories();
         }
 
-        public async Task<IEnumerable<EntitieMedicine>> GetAllMedicendelongToFactory(int id)
+        public async Task<IEnumerable<MedicineDTO>> GetAllMedicendelongToFactory(int id)
         {
             return await _factoryRepository.GetAllMedicendelongToFactory(id);
         }
 
-        public async Task<EntitieFactory?> GetFactoryById(int id)
+        public async Task<FactoryDTO?> GetFactoryById(int id)
         {
             return await _factoryRepository.GetFactoryById(id);
         }
 
 
-        public async Task<EntitieFactory?> UpdateFactory(EntitieFactory factory)
+        public async Task<FactoryDTO?> UpdateFactory(FactoryDTO factory)
         {
             return await _factoryRepository.UpdateFactory(factory);
         }
