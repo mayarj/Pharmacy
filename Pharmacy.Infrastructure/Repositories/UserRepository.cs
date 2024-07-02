@@ -85,6 +85,7 @@ namespace Pharmacy.Infrastructure.Repositories
                 Email = user.Email,
                 UserName = user.UserName,
                 Id = user.Id,
+                PatientId = user.PatientId,
                 Admin = false,
             };
         }
