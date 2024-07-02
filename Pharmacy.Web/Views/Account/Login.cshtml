@@ -1,7 +1,18 @@
 ﻿@model Pharmacy.Web.VWModels.Account.LoginVWModel
 @{
     ViewData["Title"] = "Login";
-    Layout = "~/Views/Shared/_LayoutNoLogin.cshtml";
+    if (this.User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else if(this.User.IsInRole("User"))
+    {
+        Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutNoLogin.cshtml";
+    }
 }
 
 <div class="container mt-5">

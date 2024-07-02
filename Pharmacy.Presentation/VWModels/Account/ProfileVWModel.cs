@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pharmacy.Web.VWModels.Patients;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,6 @@ namespace Pharmacy.Web.VWModels.Account
     public class ProfileVWModel
     {
         public string Email { get; set; }
-        // Add other profile properties as needed
+        public DetailsPatientVWModel Patient { get; set; }
     }
 }

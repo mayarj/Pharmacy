@@ -103,6 +103,7 @@ namespace Pharmacy.Infrastructure.Repositories
                 UserName = user.UserName,
                 Id = user.Id,
                 Admin = isAdmin,
+                PatientId = user.PatientId,
             };
         }
         public async Task<UserDTO> GetLoggedInUser(HttpContext httpContext)

@@ -15,6 +15,5 @@ namespace Pharmacy.Domain.IRepositories
         public Task LogoutAsync();
         public Task<UserDTO> GetUserAsync(string email);
         public Task<UserDTO> GetLoggedInUser(HttpContext httpContext);
-       
     }
 }
