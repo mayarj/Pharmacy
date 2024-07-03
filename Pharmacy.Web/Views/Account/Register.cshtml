@@ -11,7 +11,7 @@
     }
 }
 
-<div class="container mt-5">
+<div class="reg-container  mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
@@ -25,14 +25,18 @@
                             <input asp-for="Email" class="form-control" />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group position-relative">
                             <label asp-for="Password" class="control-label"></label>
-                            <input asp-for="Password" type="password" class="form-control" />
+                            <input asp-for="Password" type="password" id="password" class="form-control" />
+                            <button type="button" class="btn btn-outline-secondary btn-sm position-absolute  end-0 " id="togglePassword">
+                                <img id="eyeIcon" src="~/css/eye-svgrepo-com.svg" alt="Show Password" width="25" height="25" />
+                                <img id="eyeSlashIcon" src="~/css/eye-off-svgrepo-com.svg" alt="Hide Password" width="25" height="25" style="display: none;" />
+                            </button>
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group position-relative">
                             <label asp-for="ConfirmPassword" class="control-label"></label>
-                            <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                            <input asp-for="ConfirmPassword" type="password" id="cpassword" class="form-control" />
                             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                         </div>
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
@@ -64,9 +68,61 @@
                     </form>
                 </div>
             </div>
-            <div class="text-center mt-3">
-                <p>Already have an account? <a asp-controller="Account" asp-action="Login">Login here</a></p>
+            <div id="login-reg-switch" class="text-center mt-3">
+                <p>Already have an account? <a class="btn btn-secondary btn-block" asp-controller="Account" asp-action="Login">Login here</a></p>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        var passwordInput = document.getElementById('password');
+        var eyeIcon = document.getElementById('eyeIcon');
+        var eyeSlashIcon = document.getElementById('eyeSlashIcon');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            document.getElementById('cpassword').type = 'text';
+            eyeIcon.style.display = 'none';
+            eyeSlashIcon.style.display = 'inline';
+        } else {
+            passwordInput.type = 'password';
+            document.getElementById('cpassword').type = 'password';
+            eyeSlashIcon.style.display = 'none';
+            eyeIcon.style.display = 'inline';
+        }
+    });
+</script>
+}
+
+<style>
+    .position-relative {
+        position: relative;
+    }
+
+    .position-absolute {
+        position: absolute;
+    }
+
+
+
+    .end-0 {
+        right: 0;
+    }
+
+
+    .btn-outline-secondary.btn-sm {
+        border: none;
+        background: transparent;
+        padding: 0;
+    }
+
+        .btn-outline-secondary.btn-sm img {
+            display: block;
+        }
+
+    #togglePassword {
+        transform: translateY(-125%) translateX(-25%);
+    }
+</style>
